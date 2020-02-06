@@ -1,0 +1,77 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "cross-configure",
+      "type": "shell",
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "focus": true,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      },
+      "command": "./${input:container} cmake -Bxbuild -H. -DCMAKE_BUILD_TYPE=${input:build_type}",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": "$gcc"
+    },
+    {
+      "label": "cross-compile",
+      "type": "shell",
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "focus": true,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": false
+      },
+      "command": "./${input:container} make -Cxbuild",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": "$gcc"
+    },
+    {
+      "label": "install",
+      "type": "shell",
+      "command": "./${input:container} make -Cxbuild install",
+      "group": "build"
+    },
+    {
+      "label": "install/strip",
+      "type": "shell",
+      "command": "./${input:container} make -Cxbuild install/strip",
+      "group": "build"
+    },   
+    {
+      "label": "clean xbuild",
+      "type": "shell",
+      "command": "rm -rf xbuild/*",
+      "group": "build",
+    }
+  ],
+  "inputs": [
+    {
+      "id": "container",
+      "description": "Select the dockcross script",
+      "default": "armv7",
+      "type": "pickString",
+      "options": ["armv6", "armv7", "armv7a", "arm64", "mipsel"]
+    },
+    {
+      "id": "build_type",
+      "description": "Select build type",
+      "default": "Release",
+      "type": "pickString",
+      "options": ["Debug", "Release"]
+    }
+  ]
+}

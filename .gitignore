@@ -1,0 +1,22 @@
+# OS NOISE
+.DS_Store
+*~
+*.o
+*.tmp
+/tmp
+/.vscode
+
+# out-of-source build and install
+/build/*
+!/build/.gitkeep
+/xbuild/*
+!/xbuild/.gitkeep
+/products/*
+
+# Dynamically generated files
+/src/defines.h
+
+# Docker related
+/arm*
+/mipsel
+/Dockerfile
